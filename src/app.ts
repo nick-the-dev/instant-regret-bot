@@ -7,6 +7,7 @@ import { run } from '@grammyjs/runner'
 import attachUser from '@/middlewares/attachUser'
 import bot from '@/helpers/bot'
 import configureI18n from '@/middlewares/configureI18n'
+import handleAttack from '@/handlers/attack'
 import handleLanguage from '@/handlers/language'
 import i18n from '@/helpers/i18n'
 import languageMenu from '@/menus/language'
@@ -30,6 +31,9 @@ async function runApp() {
   // Commands
   bot.command(['help', 'start'], sendHelp)
   bot.command('language', handleLanguage)
+  bot.on('message', (ctx) => {
+    handleAttack(ctx, ctx.message.text)
+  })
   // Errors
   bot.catch(console.error)
   // Start bot
