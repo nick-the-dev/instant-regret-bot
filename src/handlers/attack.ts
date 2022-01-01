@@ -9,7 +9,10 @@ export default async function handleAttack(ctx: Context, message = '') {
   if (msgArray[0] === 'Attack') {
     const phone = msgArray[1].toString()
     await ctx.reply('Starting an attack!')
-    const browser = await playwright[browserType].launch({ headless: false })
+    const browser = await playwright[browserType].launch({
+      headless: false,
+      args: ['--disable-setuid-sandbox'],
+    })
     const context = await browser.newContext()
     const page = await context.newPage()
     await page.goto('https://www.kamaze.co.il/')
@@ -47,7 +50,7 @@ export default async function handleAttack(ctx: Context, message = '') {
           await browser.close()
           void ctx.reply('Success!')
         }
-      }, 10000)
-    }, 4000)
+      }, 15000)
+    }, 15000)
   }
 }
