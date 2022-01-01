@@ -2,7 +2,7 @@
 import * as playwright from 'playwright'
 import Context from '@/models/Context'
 
-const browserType = 'chromium'
+const browserType = 'firefox'
 
 export default async function handleAttack(ctx: Context, message = '') {
   const msgArray = message.split(' ')
@@ -10,8 +10,7 @@ export default async function handleAttack(ctx: Context, message = '') {
     const phone = msgArray[1].toString()
     await ctx.reply('Starting an attack!')
     const browser = await playwright[browserType].launch({
-      headless: false,
-      args: ['--disable-setuid-sandbox'],
+      headless: true,
     })
     const context = await browser.newContext()
     const page = await context.newPage()
